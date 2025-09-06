@@ -1,0 +1,132 @@
+/* General Body Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Clock Container Grid Layout - Fills the entire viewport height */
+#clock-container {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px; /* Add some space around the grid */
+    box-sizing: border-box;
+    overflow: hidden; /* Hide overflow on desktop grid */
+    height: 100vh;
+}
+
+/* Card Base Styles */
+.card {
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for better text visibility */
+    z-index: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Card Grid Positioning */
+.card[data-id="de"] { grid-area: 1 / 1; } /* Top-left */
+.card[data-id="hr"] { grid-area: 1 / 3; } /* Top-right */
+.card[data-id="us"] { grid-area: 2 / 2; } /* Center */
+.card[data-id="jp"] { grid-area: 3 / 1; } /* Bottom-left */
+.card[data-id="in"] { grid-area: 3 / 3; } /* Bottom-right */
+
+/* Card Content Styles */
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.card .time {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 10px 0;
+}
+
+.card .date {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* Country-Specific Aesthetics */
+.card[data-id="de"] { background-image: url('https://images.unsplash.com/photo-1528747045269-690d33aa473e?q=80&w=2070'); } /* Brandenburg Gate */
+.card[data-id="hr"] { background-image: url('https://images.unsplash.com/photo-1572263523393-c713c75a3a44?q=80&w=1974'); } /* Dubrovnik */
+.card[data-id="jp"] { background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070'); } /* Tokyo Street */
+.card[data-id="in"] { background-image: url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071'); } /* Taj Mahal */
+.card[data-id="us"] { background-image: url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070'); } /* Times Square */
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .card .time {
+        font-size: 3.2rem;
+    }
+    .card h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 992px) {
+    #clock-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
+        padding: 15px;
+        height: auto; /* Allow height to be determined by content on smaller screens */
+        overflow: visible; /* Allow scrolling */
+        min-height: 100vh;
+    }
+    /* Re-ordering for 2-column layout */
+    .card[data-id="us"] { grid-area: 1 / 1 / 2 / 3; } /* New York takes full top row */
+    .card[data-id="de"] { grid-area: 2 / 1; }
+    .card[data-id="hr"] { grid-area: 2 / 2; }
+    .card[data-id="jp"] { grid-area: 3 / 1; }
+    .card[data-id="in"] { grid-area: 3 / 2; }
+}
+
+@media (max-width: 768px) {
+    #clock-container {
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+    /* Reset grid areas for single column */
+    .card[data-id="us"],
+    .card[data-id="de"],
+    .card[data-id="hr"],
+    .card[data-id="jp"],
+    .card[data-id="in"] {
+        grid-area: auto;
+    }
+}
